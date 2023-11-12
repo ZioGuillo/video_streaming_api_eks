@@ -40,8 +40,8 @@ jobs:
 
       - name: Build and push Docker image with 'latest' tag
         run: |
-          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
-          docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG -f Dockerfile .
+          docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
         working-directory: app_api_streaming
 
       - name: Log out of Docker Hub
