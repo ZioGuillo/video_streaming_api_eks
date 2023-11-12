@@ -3,13 +3,14 @@ name: Push Docker Image w Tag
 on:
   push:
     branches: [ master ]
-    #paths:
-    #  - 'app_api_streaming/app/**' # This filters changes in the "app/" folder
+    # Uncomment below to filter for changes in the "app/" folder
+    # paths:
+    #   - 'app_api_streaming/app/**'
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  CONTAINER_NAME: python-hello-app-for-prod
+  CONTAINER_NAME: streaming_api_flask
   IMAGE_TAG: latest
 
 jobs:
@@ -31,15 +32,21 @@ jobs:
       - name: Log in to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
-      - name: change folder root
-        run: cd app_api_streaming/app
-
-      - name: Build and push Docker image
+      - name: Build and push Docker image with release tag
         run: |
-          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} -f Dockerfile .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
-          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG .
+        working-directory: app_api_streaming/app
+
+      - name: Build and push Docker image with 'latest' tag
+        run: |
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG -f Dockerfile .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
+        working-directory: app_api_streaming/app
+
+      - name: Log out of Docker Hub
+        if: always()
+        run: docker logout
 
       - name: Check Output Parameters
         run: |
