@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Stream</title>
+    <script type="text/javascript">
+        function stopStreaming() {
+            fetch('/stop_stream')
+                .then(response => {
+                    console.log("Stream stopped");
+                    document.getElementById('stream').style.display = 'none'; // Hide the video element
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+
+<h1>Live Video Stream</h1>
+<img src="{{ url_for('video_feed') }}?{{ cache_buster }}" alt="Video Stream">
+<button onclick="stopStreaming()">Stop Streaming</button>
+
+</body>
+</html>
