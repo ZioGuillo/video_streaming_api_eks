@@ -4,8 +4,8 @@ on:
   push:
     branches: [ master ]
     # Uncomment below to filter for changes in the "app/" folder
-    # paths:
-    #   - 'app_api_streaming/app/**'
+    paths:
+      - 'app_api_streaming/app/**'
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
