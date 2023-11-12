@@ -34,15 +34,15 @@ jobs:
 
       - name: Build and push Docker image with release tag
         run: |
-          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} -f Dockerfile .
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
-        working-directory: app_api_streaming/app
+        working-directory: app_api_streaming
 
       - name: Build and push Docker image with 'latest' tag
         run: |
-          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG -f Dockerfile .
-          docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
-        working-directory: app_api_streaming/app
+          docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
+          docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
+        working-directory: app_api_streaming
 
       - name: Log out of Docker Hub
         if: always()
