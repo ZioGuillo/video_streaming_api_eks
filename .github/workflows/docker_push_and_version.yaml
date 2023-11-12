@@ -31,6 +31,9 @@ jobs:
       - name: Log in to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
+      - name: change folder root
+        run: cd app_api_streaming/app
+
       - name: Build and push Docker image
         run: |
           docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
