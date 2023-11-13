@@ -29,6 +29,7 @@ This repository contains infrastructure code for deploying a scalable, highly-av
 2. Navigate to the desired environment under `environments/`.
 3. Run `terragrunt init` to initialize the environment.
 4. Apply the configuration using `terragrunt apply`.
+5. `aws eks update-kubeconfig --name name-0f-the-cluster --region us-east-1`
 
 ## Modules
 
