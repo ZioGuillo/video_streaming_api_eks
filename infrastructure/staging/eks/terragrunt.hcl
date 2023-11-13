@@ -13,7 +13,7 @@ include "env" {
 }
 
 inputs = {
-  eks_version = "1.26"
+  eks_version = "1.28"
   env         = include.env.locals.env
   eks_name    = "demo"
   subnet_ids  = dependency.vpc.outputs.private_subnet_ids
