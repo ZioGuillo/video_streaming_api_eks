@@ -18,10 +18,6 @@ spec:
       labels:
         app: api-streaming
     spec:
-      volumes:
-        - name: nfs-volume
-          persistentVolumeClaim:
-            claimName: pvc-nfs-pv1
       containers:
         - name: api-streaming
           image: pcisnerp/streaming_api_flask:0.9.0
@@ -34,10 +30,6 @@ spec:
               memory: "500Mi"
           ports:
             - containerPort: 5000
-          volumeMounts:
-            - name: nfs-volume
-              mountPath: /mnt/nfs
-              
 ---
 apiVersion: v1
 kind: Service
@@ -52,4 +44,3 @@ spec:
       port: 80
       targetPort: 5000
       protocol: TCP
----
