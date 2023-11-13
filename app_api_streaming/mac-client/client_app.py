@@ -4,7 +4,7 @@ from requests.exceptions import RequestException
 import time
 
 cap = cv2.VideoCapture(0)
-api_endpoint = 'http://127.0.0.1:5000/upload'
+api_endpoint = 'https://video.ibrain.dev/upload'
 max_retries = 5
 retry_delay = 1  # seconds
 
