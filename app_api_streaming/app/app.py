@@ -9,19 +9,8 @@ from prometheus_flask_exporter import PrometheusMetrics
 app = Flask(__name__)
 
 # Initialize metrics
-metrics = PrometheusMetrics(app)
-
-# Optional: Add some default metrics for all requests
-@app.before_request
-def before_request():
-    request.start_time = time.time()
-
-@app.after_request
-def after_request(response):
-    request_latency = time.time() - request.start_time
-    metrics.histogram('flask_request_latency_seconds', 'Flask Request Latency',
-                      buckets=[0.1, 0.2, 0.5, 1, 2, 5]).observe(request_latency)
-    return response
+metrics = PrometheusMetrics(app) # export metrics to /metrics endpoint
+metrics.info('app_info', 'Application info', version='1.0.3', app_name='app_api_streaming')
 
 @app.get('/health')
 def health():
