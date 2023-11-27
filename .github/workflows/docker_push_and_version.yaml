@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'app_api_streaming/app/**'
-  workflow_dispatch: 
+  workflow_dispatch:
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -38,16 +38,8 @@ jobs:
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
         working-directory: app_api_streaming
 
-      # Trivy vulnerability scanner
       - name: Run Trivy vulnerability scanner on release tag
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: "${{ env.DOCKER_USERNAME }}/${{ env.CONTAINER_NAME }}:${{ steps.release.outputs.tag_name }}"
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+        run: trivy image --format table --exit-code 1 --ignore-unfixed --vuln-type os,library --severity CRITICAL,HIGH ${{ env.DOCKER_USERNAME }}/${{ env.CONTAINER_NAME }}:${{ steps.release.outputs.tag_name }}
 
       - name: Build and push Docker image with 'latest' tag
         run: |
@@ -55,16 +47,8 @@ jobs:
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
         working-directory: app_api_streaming
 
-      # Trivy vulnerability scanner
       - name: Run Trivy vulnerability scanner on latest tag
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+        run: trivy image --format table --exit-code 1 --ignore-unfixed --vuln-type os,library --severity CRITICAL,HIGH ${{ env.DOCKER_USERNAME }}/${{ env.CONTAINER_NAME }}:${{ env.IMAGE_TAG }}
 
       - name: Log out of Docker Hub
         if: always()
