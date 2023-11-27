@@ -7,6 +7,7 @@ import numpy as np
 from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
+app.config['WTF_CSRF_ENABLED'] = False # Sensitive
 
 # Initialize metrics exporter
 metrics = PrometheusMetrics(app) # export metrics to /metrics endpoint
