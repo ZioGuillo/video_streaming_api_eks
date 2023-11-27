@@ -8,7 +8,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 
-# Initialize metrics
+# Initialize metrics exporter
 metrics = PrometheusMetrics(app) # export metrics to /metrics endpoint
 metrics.info('app_info', 'Application info', version='1.0.3', app_name='app_api_streaming')
 
