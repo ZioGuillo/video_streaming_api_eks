@@ -37,6 +37,10 @@ jobs:
           docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }} .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
         working-directory: app_api_streaming
+      
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Run Trivy vulnerability scanner on release tag
         run: trivy image --format table --exit-code 1 --ignore-unfixed --vuln-type os,library --severity CRITICAL,HIGH ${{ env.DOCKER_USERNAME }}/${{ env.CONTAINER_NAME }}:${{ steps.release.outputs.tag_name }}
