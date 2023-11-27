@@ -3,7 +3,6 @@ name: Push Docker Image w Tag
 on:
   push:
     branches: [ master ]
-    # Uncomment below to filter for changes in the "app/" folder
     paths:
       - 'app_api_streaming/app/**'
 
@@ -38,11 +37,33 @@ jobs:
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
         working-directory: app_api_streaming
 
+      # Trivy vulnerability scanner
+      - name: Run Trivy vulnerability scanner on release tag
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: $DOCKER_USERNAME/$CONTAINER_NAME:${{ steps.release.outputs.tag_name }}
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
       - name: Build and push Docker image with 'latest' tag
         run: |
           docker build -t $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG -f Dockerfile .
           docker push $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
         working-directory: app_api_streaming
+
+      # Trivy vulnerability scanner
+      - name: Run Trivy vulnerability scanner on latest tag
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: $DOCKER_USERNAME/$CONTAINER_NAME:$IMAGE_TAG
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
       - name: Log out of Docker Hub
         if: always()
