@@ -1,6 +1,6 @@
 # Video Streaming API on AWS EKS
 
-[![Docker Image Save](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml/badge.svg?branch=master)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml) ![OWASP Check](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/OWASP_scan.yaml/badge.svg) ![Trivy Check FS](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/trivy_scan.yaml/badge.svg)
+[![Docker Image Save](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml/badge.svg?branch=master)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml) [![OWASP Check](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/owasp_scan.yaml/badge.svg)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/owasp_scan.yaml) [![Trivy Check FS](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/trivy_scan.yaml/badge.svg)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/trivy_scan.yaml)
 
 ## Project Description
 
