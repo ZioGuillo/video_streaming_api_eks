@@ -1,8 +1,6 @@
 # Video Streaming API on AWS EKS
 
-[![Push Docker Image w Tag](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml/badge.svg?branch=master)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml)
-
-![OWASP Check](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/OWASP_scan.yaml/badge.svg)
+[![Push Docker Image w Tag](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml/badge.svg?branch=master)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml) ![OWASP Check](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/OWASP_scan.yaml/badge.svg)
 
 ## Project Description
 
