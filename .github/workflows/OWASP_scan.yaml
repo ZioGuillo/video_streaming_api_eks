@@ -50,3 +50,17 @@ jobs:
         run: |
           # Run OWASP Dependency-Check on your project
           sh dependency-check/dependency-check/bin/dependency-check.sh --project "$CONTAINER_NAME" --scan app_api_streaming/app --out . --format HTML
+
+      - name: Update OWASP Badge
+        if: always()
+        run: |
+          OWASP_STATUS="failed"
+          if [ ${{ job.status }} == 'success' ]; then
+              OWASP_STATUS="passing"
+          fi
+          sed -i "s/OWASP Status: .*/OWASP Status: ${OWASP_STATUS}/" README.md
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Update OWASP status"
+          git push
+        
