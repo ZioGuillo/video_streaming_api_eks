@@ -1,0 +1,52 @@
+name: OWASP Dependency-Check
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  CONTAINER_NAME: streaming_api_flask
+  IMAGE_TAG: latest
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin' # This can be 'adopt', 'temurin', 'zulu', etc.
+      
+      - name: Print JAVA_HOME
+        run: echo "JAVA_HOME=${JAVA_HOME}"
+
+      - name: OWASP Dependency-install
+        run: |
+          # Install OWASP Dependency-Check
+          wget https://github.com/jeremylong/DependencyCheck/releases/download/v6.3.1/dependency-check-6.3.1-release.zip
+          unzip dependency-check-6.3.1-release.zip -d dependency-check
+          sudo chmod +x dependency-check/dependency-check/bin/dependency-check.sh
+          export PATH=$PATH:$(pwd)/dependency-check/dependency-check/bin
+
+      - name: OWASP Dependency-Check
+        run: |
+          # Ensure the dependency-check.sh is executable
+          chmod +x dependency-check/dependency-check/bin/dependency-check.sh
+        env:
+          # Ensure JAVA_HOME is passed as an environment variable
+          JAVA_HOME: ${{ env.JAVA_HOME }}
+        
+      - name: OWASP Dependency-Run
+        run: |
+          # Run OWASP Dependency-Check on your project
+          sh dependency-check/dependency-check/bin/dependency-check.sh --project "$CONTAINER_NAME" --scan app_api_streaming/app --out . --format HTML
