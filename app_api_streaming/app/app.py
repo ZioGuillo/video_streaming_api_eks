@@ -95,7 +95,7 @@ def index():
     return render_template('index.html', cache_buster=time.time())
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True,host='0.0.0.0', port=5000)
+    app.run(threaded=True,host='0.0.0.0', port=5000)
     buffer_clear_thread = threading.Thread(target=clear_buffer, daemon=True)
     buffer_clear_thread.start()
     frame_capture_thread = threading.Thread(target=capture_frames, daemon=True)
