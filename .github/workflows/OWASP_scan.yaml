@@ -14,8 +14,6 @@ env:
 jobs:
   push:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -64,5 +62,5 @@ jobs:
           git commit -am "Update OWASP status"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PS_TOKEN }}
         
