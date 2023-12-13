@@ -7,15 +7,15 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY ./app .
 
-# Install any needed packages specified in requirements.txt
-# RUN apt-get update && apt-get install -y python3 python3-pip
-
-RUN apt-get update && apt-get -y install \
+# Update and upgrade system packages
+RUN apt-get update && apt-get -y upgrade && apt-get -y install \
     nginx \
     python3-dev \
     build-essential \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
+# Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip --no-cache-dir
 RUN pip install --no-cache-dir -r requirements.txt --src /usr/local/src
 
