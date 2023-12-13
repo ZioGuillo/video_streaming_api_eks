@@ -2,6 +2,8 @@
 
 [![Push Docker Image w Tag](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml/badge.svg?branch=master)](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/docker_push_and_version.yaml)
 
+![OWASP Check](https://github.com/ZioGuillo/video_streaming_api_eks/actions/workflows/OWASP_scan.yaml/badge.svg)
+
 ## Project Description
 
 This repository contains infrastructure code for deploying a scalable, highly-available video streaming API using Amazon EKS (Elastic Kubernetes Service). It uses Terraform and Terragrunt for a modular and efficient infrastructure setup across multiple AWS environments.
