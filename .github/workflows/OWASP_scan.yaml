@@ -63,4 +63,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -am "Update OWASP status"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         
