@@ -14,11 +14,11 @@ env:
   IMAGE_TAG: latest
 
 jobs:
-  push:
+  docker_build_and_push:
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
     env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - id: release
         uses: rymndhng/release-on-push-action@master

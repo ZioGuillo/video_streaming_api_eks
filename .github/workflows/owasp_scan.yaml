@@ -12,9 +12,9 @@ env:
   IMAGE_TAG: latest
 
 jobs:
-  push:
+  dependency_check:
+    name: OWASP Dependency Analysis
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

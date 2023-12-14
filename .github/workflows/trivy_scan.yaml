@@ -3,15 +3,14 @@ name: trivy scanfs
 on:
   push:
     branches: [ master ]
-
   workflow_dispatch:
 
 jobs:
-  push:
+  trivy_filesystem_scan:
+    name: Trivy Filesystem Vulnerability Scan
     runs-on: ubuntu-latest
     env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
