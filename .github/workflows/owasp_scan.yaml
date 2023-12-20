@@ -6,10 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  CONTAINER_NAME: streaming_api_flask
-  IMAGE_TAG: latest
+  PROJECT_NAME: streaming_api_flask
+  PATH: app_api_streaming/app
 
 jobs:
   dependency_check:
@@ -47,7 +45,7 @@ jobs:
       - name: OWASP Dependency-Run
         run: |
           # Run OWASP Dependency-Check on your project
-          sh dependency-check/dependency-check/bin/dependency-check.sh --project "$CONTAINER_NAME" --scan app_api_streaming/app --out . --format HTML
+          sh dependency-check/dependency-check/bin/dependency-check.sh --project "$PROJECT_NAME" --scan $PATH --out . --format HTML
 
       - name: Update OWASP Badge
         if: always()
