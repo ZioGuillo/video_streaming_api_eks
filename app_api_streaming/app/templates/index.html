@@ -3,20 +3,24 @@
 <head>
     <title>Video Stream</title>
     <script type="text/javascript">
+        function startStreaming() {
+            document.getElementById('stream').style.display = 'block'; // Show the video element
+        }
+
         function stopStreaming() {
-            fetch('/stop_stream')
-                .then(response => {
-                    console.log("Stream stopped");
-                    document.getElementById('stream').style.display = 'none'; // Hide the video element
-                })
-                .catch(error => console.error('Error:', error));
+            document.getElementById('stream').style.display = 'none'; // Hide the video element
         }
     </script>
 </head>
 <body>
 
 <h1>Live Video Stream</h1>
-<img src="{{ url_for('video_feed') }}?{{ cache_buster }}" alt="Video Stream">
+
+<!-- Video Stream -->
+<img id="stream" src="{{ request.url_for('video_feed') }}?{{ cache_buster }}" alt="Video Stream" style="display:none;">
+
+<!-- Control Buttons -->
+<button onclick="startStreaming()">Start Streaming</button>
 <button onclick="stopStreaming()">Stop Streaming</button>
 
 </body>
