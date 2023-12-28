@@ -80,3 +80,6 @@ async def index(request: Request):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+# uvicorn app:app --host 0.0.0.0 --reload
+# REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h 127.0.0.1 -p 6379 --raw get 'frame:3' >test.jpg
