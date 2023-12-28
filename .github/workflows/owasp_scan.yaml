@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_NAME: streaming_api_flask
-  PATH: app_api_streaming/app
+  SCAN_PATH: app_api_streaming/app
 
 jobs:
   dependency_check:
@@ -32,7 +32,7 @@ jobs:
           wget https://github.com/jeremylong/DependencyCheck/releases/download/v6.3.1/dependency-check-6.3.1-release.zip
           unzip dependency-check-6.3.1-release.zip -d dependency-check
           sudo chmod +x dependency-check/dependency-check/bin/dependency-check.sh
-          export PATH=$PATH:$(pwd)/dependency-check/dependency-check/bin
+          echo "$(pwd)/dependency-check/dependency-check/bin" >> $GITHUB_PATH
 
       - name: OWASP Dependency-Check
         run: |
@@ -45,13 +45,13 @@ jobs:
       - name: OWASP Dependency-Run
         run: |
           # Run OWASP Dependency-Check on your project
-          sh dependency-check/dependency-check/bin/dependency-check.sh --project "$PROJECT_NAME" --scan $PATH --out . --format HTML
+          sh dependency-check/dependency-check/bin/dependency-check.sh --project "$PROJECT_NAME" --scan ${{ env.SCAN_PATH }} --out . --format HTML
 
       - name: Update OWASP Badge
         if: always()
         run: |
           OWASP_STATUS="failed"
-          if [ ${{ job.status }} == 'success' ]; then
+          if [ "${{ job.status }}" == 'success' ]; then
               OWASP_STATUS="passing"
           fi
           sed -i "s/OWASP Status: .*/OWASP Status: ${OWASP_STATUS}/" README.md
@@ -61,4 +61,3 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.PS_TOKEN }}
-        
