@@ -3,6 +3,8 @@ name: OWASP Dependency-Check
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'app_api_streaming/app/**'
   workflow_dispatch:
 
 env:

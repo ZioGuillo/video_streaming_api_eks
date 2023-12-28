@@ -3,6 +3,8 @@ name: trivy scanfs
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'app_api_streaming/app/**'
   workflow_dispatch:
 
 jobs:
