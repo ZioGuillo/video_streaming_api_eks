@@ -10,6 +10,24 @@ import aioredis
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+streaming = False
+
+@app.get("/start_stream")
+async def start_stream():
+    global streaming
+    streaming = True
+    return {"message": "Streaming started"}
+
+@app.get("/stop_stream")
+async def stop_stream():
+    global streaming
+    streaming = False
+    return {"message": "Streaming stopped"}
+
+@app.get("/streaming_status")
+async def streaming_status():
+    return {"streaming": streaming}
+
 # Redis setup
 REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', 'default_redis_password_if_not_set')
 redis = aioredis.from_url(
@@ -75,7 +93,7 @@ async def gen_frames():
 
 @app.get("/")
 async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "cache_buster": time.time()})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 if __name__ == "__main__":
     import uvicorn

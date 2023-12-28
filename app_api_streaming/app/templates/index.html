@@ -3,25 +3,22 @@
 <head>
     <title>Video Stream</title>
     <script type="text/javascript">
+        // Ensure these functions match your requirements
         function startStreaming() {
-            document.getElementById('stream').style.display = 'block'; // Show the video element
+            document.getElementById('stream').src = "{{ url_for('video_feed') }}?" + new Date().getTime();
+            document.getElementById('stream').style.display = 'block';
         }
 
         function stopStreaming() {
-            document.getElementById('stream').style.display = 'none'; // Hide the video element
+            document.getElementById('stream').src = '';
+            document.getElementById('stream').style.display = 'none';
         }
     </script>
 </head>
 <body>
-
-<h1>Live Video Stream</h1>
-
-<!-- Video Stream -->
-<img id="stream" src="{{ request.url_for('video_feed') }}?{{ cache_buster }}" alt="Video Stream" style="display:none;">
-
-<!-- Control Buttons -->
-<button onclick="startStreaming()">Start Streaming</button>
-<button onclick="stopStreaming()">Stop Streaming</button>
-
+    <h1>Live Video Stream</h1>
+    <img id="stream" src="" alt="Video Stream" style="display:none;">
+    <button onclick="startStreaming()">Start Streaming</button>
+    <button onclick="stopStreaming()">Stop Streaming</button>
 </body>
 </html>
