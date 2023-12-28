@@ -37,6 +37,12 @@ spec:
               memory: "500Mi"
           ports:
             - containerPort: 8000
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: redis-password
 ---
 apiVersion: v1
 kind: Service
