@@ -18,9 +18,16 @@ spec:
       labels:
         app: api-streaming
     spec:
+      nodeSelector:
+        type: "no-arm"  # Node selector added here
+      tolerations:  # Add tolerations here
+      - key: "sonarqube"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
       containers:
         - name: api-streaming
-          image: pcisnerp/streaming_api_flask:0.9.0
+          image: pcisnerp/streaming_api_flask:0.22.0
           resources:
             limits:
               cpu: "1"

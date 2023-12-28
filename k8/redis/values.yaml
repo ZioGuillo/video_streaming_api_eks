@@ -1,0 +1,8 @@
+master:
+  persistence:
+    storageClass: "nfs-client"
+    size: "8Gi"
+replica:
+  persistence:
+    storageClass: "nfs-client"
+    size: "8Gi"
